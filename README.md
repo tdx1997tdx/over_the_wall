@@ -4,11 +4,11 @@
 
 # centos翻墙一键配置脚本
 
-审查越来越严格，用shawdowsocks的tcp直连翻墙经常被封。这里使用v2ray作为翻墙工具，使用websocket和tls协议模拟https请求直连nginx的443端口以达到欺骗的目的，安全稳定，目前试过的最安全的翻墙策略。然而这种策略缺点就是配置麻烦，就需要一套脚本进行自动配置。
+审查越来越严格，用shawdowsocks的tcp直连翻墙经常被封。这里使用v2ray作为翻墙工具，使用websocket和tls协议模拟https请求直连nginx的443端口，使用域名隐藏ip以达到欺骗的目的，安全稳定，目前试过的最安全的翻墙策略。然而这种策略缺点就是配置麻烦，就需要一套脚本进行自动配置。
 
 ## 手动步骤
 
-### selinux关闭
+### selinux设置
 
 ```sh
 setenforce 0
@@ -20,7 +20,13 @@ setenforce 0
 vim /etc/selinux/config
 ```
 
-我们可以将它后面的值修改为permissive或者disabled，这样即使重启电脑以后，它默认的状态都会是permissve或disabled状态，而不会恢复到enforcing状态
+我们可以将它后面的值修改为permissive或者disabled，这样即使重启电脑以后，它默认的状态都会是permissve或disabled状态，而不会恢复到enforcing状态.
+
+查看状态
+
+```sh
+getenforce
+```
 
 ### 防火墙关闭
 
@@ -104,7 +110,7 @@ yum install nginx -y
 
 ```shell
 systemctl enable nginx　　#设置nginx为开机启动
-systemctl start nginx　　#启动nginx服务
+systemctl restart nginx　　#启动nginx服务
 ```
 
 ### 配置nginx文件

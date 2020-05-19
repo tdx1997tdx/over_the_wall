@@ -9,44 +9,36 @@ def main():
     while True:
         print('###############################')
         print('1. 填写相关配置信息')
-        print('2. 一键安装配置')
-        print('3. 退出脚本')
+        print('2. selinux和防火墙')
+        print('3. v2ray安装与初始化')
+        print('4. nginx安装与初始化')
+        print('5. 证书申请设置')
+        print('6. nginx证书设置')
+        print('7. 退出脚本')
         print('###############################')
         n = input("请输入操作:")
         if n == '1':
             input_config()
-            print('设置完成')
         elif n == '2':
-            print('开始')
             before_config()
-            v2ray()
-            nginx()
-            certificate()
-            nginx_config()
         elif n == '3':
+            v2ray()
+        elif n == '4':
+            nginx()
+        elif n == '5':
+            certificate()
+        elif n == '6':
+            nginx_config()
+        elif n == '7':
             break
         else:
-            print('输入正确的命令')
+            print('请输入正确的命令')
 
 
 def input_config():
     config.domain_name = input('请输入域名:')
+    print('设置完成')
 
-
-def kill(name):
-    def get_process_id(name):
-        child = subprocess.Popen(["pgrep", "-f", name], stdout=subprocess.PIPE, shell=False)
-        response = bytes.decode(child.communicate()[0])
-        return response
-
-    pid = get_process_id(name)
-    if not pid:
-        print("no target pid to kill,please check")
-    else:
-        print('process_pid:', pid)
-        result = os.system("kill -9 " + pid)
-        if result == 0:
-            print("execute kill success")
 
 
 def before_config():
@@ -67,14 +59,20 @@ def v2ray():
 
 
 def nginx():
-    kill('nginx')
     f = os.popen('yum install nginx -y')
     print(f.read())
+    env = Environment(
+        loader=FileSystemLoader(searchpath="./"))
+    template = env.get_template('nginx_templete_before.conf')  # 获取一个模板文件
+    res = template.render(hostname=config.domain_name)  # 渲染
+    f = open(config.nginx_condig_path, 'w')
+    f.write(res)
+    f.close()
     f = os.popen('systemctl enable nginx')
     print(f.read())
     f = os.popen('systemctl restart nginx')
     print(f.read())
-    print('nginx安装完成')
+    print('nginx安装初始化完成')
 
 
 def certificate():
