@@ -14,7 +14,8 @@ def main():
         print('4. nginx安装与初始化')
         print('5. 证书申请设置')
         print('6. nginx证书设置')
-        print('7. 退出脚本')
+        print('7. 查询id')
+        print('8. 退出脚本')
         print('###############################')
         n = input("请输入操作:")
         if n == '1':
@@ -30,6 +31,8 @@ def main():
         elif n == '6':
             nginx_config()
         elif n == '7':
+            notify()
+        elif n == '8':
             break
         else:
             print('请输入正确的命令')
@@ -109,7 +112,7 @@ def nginx_config():
 
 def notify():
     print('---------------------------------------')
-    print('**默认id:', 'd59b9d35-be8b-41f5-86e9-4dc6be7f2cw5')
+    print('**默认id:', config.id)
     print('**默认端口号:', '12345')
     print('**默认接口:', 'ws')
     print('---------------------------------------')

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/nginx_templete.conf" charset="US-ASCII" />
+    <file url="file://$PROJECT_DIR$/nginx_templete_before.conf" charset="US-ASCII" />
     <file url="file://$PROJECT_DIR$/selinux_config" charset="US-ASCII" />
   </component>
 </project>
